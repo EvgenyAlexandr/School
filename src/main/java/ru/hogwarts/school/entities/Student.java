@@ -8,6 +8,7 @@ public class Student {
     private String  name;   // Имя
     private int     age;    // Возраст
 
+    public Student() {}
     public Student(long id, String name, int age) {
         this.id   = id;
         this.name = name;

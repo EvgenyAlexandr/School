@@ -1,16 +1,14 @@
 package ru.hogwarts.school.controller;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-//import ru.hogwarts.school.entities.Student;
 import ru.hogwarts.school.entities.Faculty;
 import ru.hogwarts.school.service.FacultyService;
-import ru.hogwarts.school.service.StudentService;
+
 
 @RestController
-@RequestMapping("/faculty")
+@RequestMapping("faculty")
 public class FacultyController {
 
     private final FacultyService facultyService;
@@ -37,7 +35,6 @@ public class FacultyController {
         if (foundFaculty == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();   // Если студент не найден возвращаем ошибку 404
         }
-
         return ResponseEntity.ok(foundFaculty);
     }
 

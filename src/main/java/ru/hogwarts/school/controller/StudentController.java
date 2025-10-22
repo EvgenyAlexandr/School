@@ -7,7 +7,7 @@ import ru.hogwarts.school.entities.Student;
 import ru.hogwarts.school.service.StudentService;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("student")
 public class StudentController {
 
     private final StudentService studentService;
@@ -15,6 +15,9 @@ public class StudentController {
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
+
+
+    // http://localhost:8080/swagger-ui.html
 
     @GetMapping("{id}")
     public ResponseEntity<Student> getStudentInfo(@PathVariable long id) {
@@ -34,7 +37,6 @@ public class StudentController {
         if (foundStudent == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();   // Если студент не найден возвращаем ошибку 404
         }
-
         return ResponseEntity.ok(foundStudent);
     }
 

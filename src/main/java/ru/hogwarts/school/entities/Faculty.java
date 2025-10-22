@@ -9,6 +9,7 @@ public class Faculty {
     private String  color;  // Цвет факультета
 
 
+    public Faculty() {}
 
     public Faculty(long id, String name, String color) {
         this.id     = id;
