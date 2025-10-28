@@ -3,6 +3,8 @@ package ru.hogwarts.school.service;
 import ru.hogwarts.school.entities.Student;
 import ru.hogwarts.school.entities.Student;
 
+import java.util.Collection;
+
 public interface StudentService {
 
     Student addStudent (Student student);
@@ -13,6 +15,6 @@ public interface StudentService {
 
     void deleteStudent(long id);
 
-
+    public Collection<Student> findByAge(int age);
 
 }
