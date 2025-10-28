@@ -1,18 +1,48 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.hogwarts.school.entities.Faculty;
+import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.Collection;
+import java.util.*;
 
-public interface FacultyService {
 
-    Faculty addFaculty (Faculty faculty);
+@Service
+public class FacultyService {
+    @Autowired
+    private final FacultyRepository facultyRepository;
 
-    Faculty findFaculty (long id);
+    public FacultyService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
 
-    Faculty editFaculty(long id, Faculty faculty);
+    // Добавить
+    public Faculty addFaculty(Faculty faculty) {
+        return facultyRepository.save(faculty);
+    }
 
-    void deleteFaculty(long id);
+    // Найти
+    public Faculty findFaculty(long id) {
+        return facultyRepository.getReferenceById(id);
+    }
 
-    public Collection<Faculty> findByColor(String color);
+    // Редактировать
+    public Faculty editFaculty(long id, Faculty faculty) {
+        if (!facultyRepository.existsById(faculty.getId())){
+            return null;
+        }
+        return facultyRepository.save(faculty);
+    }
+
+    // Удалить
+    public void deleteFaculty(long id) {
+        facultyRepository.deleteById(id);
+    }
+
+    // Найти по Цвету
+    public Collection<Faculty> findByColor(String color) {
+        return facultyRepository.findAll();
+    }
+
 }

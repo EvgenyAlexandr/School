@@ -1,20 +1,53 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.entities.Student;
-import ru.hogwarts.school.entities.Student;
+import ru.hogwarts.school.repository.StudentRepository;
 
-import java.util.Collection;
+import java.util.*;
 
-public interface StudentService {
+@Service
+public class StudentService {
+    @Autowired
+    private final StudentRepository studentRepository;
 
-    Student addStudent (Student student);
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
-    Student findStudent (long id);
+    // Добавить
+    public Student addStudent(Student student) {
+        return studentRepository.save(student);
+    }
 
-    Student editStudent(long id, Student student);
+    // Найти
+    public Student findStudent(long id) {
+        return studentRepository.getReferenceById(id);
+    }
 
-    void deleteStudent(long id);
+    // Редактировать
+    public Student editStudent(long id, Student student) {
+        if (!studentRepository.existsById(student.getId())){
+            return null;
+        }
+        studentRepository.save(student);
+        return student;
+    }
 
-    public Collection<Student> findByAge(int age);
+    // Удалить
+    public void deleteStudent(long id) {
+        studentRepository.deleteById(id);
+    }
 
+    // Поиск по Возрасту
+    public Collection<Student> findByAge(int age) {
+        return studentRepository.findByAge(age);
+    }
+
+    // Все студенты
+    public Collection<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
 }

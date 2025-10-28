@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.entities.Faculty;
 import ru.hogwarts.school.service.FacultyService;
+
 import java.util.*;
 
 
