@@ -32,29 +32,29 @@
 
 	<dependencies> <!--  -->
 
-		<dependency>
+		<dependency>	<!-- Модуль для работы с Web  -->
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
-		<dependency>
+		<dependency>	<!-- Модуль для работы Тестов  -->
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
+		<dependency>	<!-- Библиотека Spring Boot, для автоматической генерации документации API  -->
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.8.0</version>
 		</dependency>
 
-		<dependency>
+		<dependency>	<!-- Модуль для взаимодействия с БД  -->
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
-		<dependency>
+		<dependency>	<!-- Модуль для взаимодействия PostgreSQL  -->
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>42.3.2</version>

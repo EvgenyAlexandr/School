@@ -18,7 +18,6 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-
     // http://localhost:8080/swagger-ui.html
 
     @GetMapping("{id}")
@@ -30,10 +29,10 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @PostMapping
+    @PostMapping            // Отправить
     public Student createStudent(@RequestBody Student student) {return studentService.addStudent(student);}
 
-    @PutMapping("{id}")
+    @PutMapping("{id}")     // Редактировать
     public ResponseEntity<Student> editStudent(@RequestBody Student student, @PathVariable Long id) {
         Student foundStudent = studentService.editStudent(id, student);
         if (foundStudent == null) {

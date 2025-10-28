@@ -1,14 +1,11 @@
 package ru.hogwarts.school.controller;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.entities.Faculty;
 import ru.hogwarts.school.service.FacultyService;
 import java.util.*;
-
-
 
 
 @RestController
@@ -30,10 +27,10 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
-    @PostMapping
+    @PostMapping            // Отправить
     public Faculty createFaculty(@RequestBody Faculty faculty) {return facultyService.addFaculty(faculty);}
 
-    @PutMapping("{id}")
+    @PutMapping("{id}")     // Редактировать
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty, @PathVariable Long id) {
         Faculty foundFaculty = facultyService.editFaculty(id, faculty);
         if (foundFaculty == null) {
