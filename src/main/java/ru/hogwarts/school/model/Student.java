@@ -1,4 +1,4 @@
-package ru.hogwarts.school.entities;
+package ru.hogwarts.school.model;
 
 import jakarta.persistence.*;
 
@@ -6,12 +6,12 @@ import java.util.Objects;
 
 public class Student {
 
+    @Id
+    @GeneratedValue
+    private long    id;     // Идентификатор
+
     private String  name;   // Имя
     private int     age;    // Возраст
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long    id;     // Идентификатор
 
     public Student() {}
     public Student(long id, String name, int age) {
