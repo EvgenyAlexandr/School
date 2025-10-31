@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Student;
@@ -30,7 +31,7 @@ public class StudentService {
     // Редактировать
     public Student editStudent(long id, Student student) {
         if (!studentRepository.existsById(student.getId())){
-            return null;
+            throw new EntityNotFoundException("Студент с ID " + id + " не найден");
         }
         studentRepository.save(student);
         return student;
