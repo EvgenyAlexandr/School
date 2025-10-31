@@ -14,6 +14,19 @@ public class Student {
     private String  name;   // Имя
     private int     age;    // Возраст
 
+    @ManyToOne
+    @JoinColumn(name = "faculty_id")
+    private Faculty faculty;
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
+
     public Student() {}
     public Student(long id, String name, int age) {
         this.id   = id;

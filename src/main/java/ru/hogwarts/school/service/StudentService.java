@@ -3,6 +3,7 @@ package ru.hogwarts.school.service;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
@@ -45,6 +46,17 @@ public class StudentService {
     // Поиск по Возрасту
     public Collection<Student> findByAge(int age) {
         return studentRepository.findByAge(age);
+    }
+
+    // Поиск в диапазоне Возрастов
+    public Collection<Student> findByAgeBetween(int minAge, int maxAge) {
+        return studentRepository.findByAgeBetween(minAge, maxAge);
+    }
+
+    // Редактирование Факультета студента
+    public Student addStudentToFaculty(Student student, Faculty faculty) {
+        student.setFaculty(faculty);
+        return studentRepository.save(student);
     }
 
     // Все студенты
