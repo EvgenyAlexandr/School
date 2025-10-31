@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.*;
@@ -46,11 +47,28 @@ public class FacultyController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping
+    @GetMapping             // Поиск Факультета по цвету
     public ResponseEntity<Collection<Faculty>> findFaculties(@RequestParam(required = false) String color) {
         if (color != null && !color.isBlank()) {
             return ResponseEntity.ok(facultyService.findByColor(color));
         }
         return ResponseEntity.ok(Collections.emptyList());
+    }
+
+    @GetMapping("/search")  // Поиск Факультета по Названию ИЛИ цвету
+    public ResponseEntity<Collection<Faculty>> searchFaculties(@RequestParam String searchQuery) {
+        if (searchQuery != null && !searchQuery.isBlank()) {
+            return ResponseEntity.ok(facultyService.findByNameOrColor(searchQuery, searchQuery));
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping("{id}/students")    // Поиск
+    public ResponseEntity<Collection<Student>> getFacultyStudents(@PathVariable Long id) {
+        Faculty faculty = facultyService.findFaculty(id);
+        if (faculty == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(faculty.getStudents());
     }
 }

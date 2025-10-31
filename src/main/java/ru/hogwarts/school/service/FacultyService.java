@@ -46,4 +46,13 @@ public class FacultyService {
         return facultyRepository.findAll();
     }
 
+    // Все Факультеты
+    public Collection<Faculty> getAllFaculty(){
+        return facultyRepository.findAll();
+    }
+
+    // Поиск Факультета по Названию ИЛИ цвету
+    public Collection<Faculty> findByNameOrColor(String name, String color) {
+        return facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase(name, color);
+    }
 }
