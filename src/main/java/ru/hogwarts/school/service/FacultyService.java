@@ -43,7 +43,7 @@ public class FacultyService {
 
     // Найти по Цвету
     public Collection<Faculty> findByColor(String color) {
-        return facultyRepository.findAll();
+        return facultyRepository.findByColor(color);
     }
 
     // Все Факультеты
