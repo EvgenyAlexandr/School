@@ -11,9 +11,9 @@ import java.util.*;
 @Service
 public class FacultyService {
 
-    @Autowired
     private final FacultyRepository facultyRepository;
 
+    @Autowired
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
     }
@@ -25,15 +25,20 @@ public class FacultyService {
 
     // Найти факультет по ID
     public Faculty findFaculty(long id) {
-        return facultyRepository.getReferenceById(id);
+        return facultyRepository.findById(id).orElse(null);
     }
 
     // Редактировать
-    public Faculty editFaculty(long id, Faculty faculty) {
-        if (!facultyRepository.existsById(faculty.getId())){
-            throw new EntityNotFoundException("Факультет с ID " + id + " не найден");
-        }
-        return facultyRepository.save(faculty);
+    public Faculty editFaculty(long id, Faculty updatedFaculty) {
+        // 1. Находим существующую запись по ID
+        Faculty existingFaculty = facultyRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Факультет с ID " + id + " не найден"));
+
+        // 2. Обновляем поля
+        existingFaculty.setName (updatedFaculty.getName());
+        existingFaculty.setColor(updatedFaculty.getColor());
+
+        return facultyRepository.save(existingFaculty);
     }
 
     // Удалить

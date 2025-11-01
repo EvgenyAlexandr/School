@@ -12,9 +12,10 @@ import java.util.*;
 @Service
 public class StudentService {
 
-    @Autowired
+    //@Autowired
     private final StudentRepository studentRepository;
 
+    @Autowired
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
@@ -26,16 +27,20 @@ public class StudentService {
 
     // Найти
     public Student findStudent(long id) {
-        return studentRepository.getReferenceById(id);
+        return studentRepository.findById(id).orElse(null);
     }
 
     // Редактировать
-    public Student editStudent(long id, Student student) {
-        if (!studentRepository.existsById(student.getId())){
-            throw new EntityNotFoundException("Студент с ID " + id + " не найден");
-        }
-        studentRepository.save(student);
-        return student;
+    public Student editStudent(long id, Student updatedStudent) {
+        // 1. Находим существующую запись по ID
+        Student existingStudent = studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Факультет с ID " + id + " не найден"));
+
+        // 2. Обновляем поля
+        existingStudent.setName(updatedStudent.getName());
+        existingStudent.setAge (updatedStudent.getAge());
+
+        return studentRepository.save(existingStudent);
     }
 
     // Удалить

@@ -75,7 +75,7 @@ public class StudentController {
         return ResponseEntity.badRequest().build();
     }
 
-    @Operation(summary = "Все Студенты выбранного факультета")
+    @Operation(summary = "Название Факультета Студента (Студент ID)")
     @GetMapping("{id}/faculty")     // Все студенты выбранного факультета
     public ResponseEntity<Faculty> getStudentFaculty(@PathVariable Long id) {
         Student student = studentService.findStudent(id);

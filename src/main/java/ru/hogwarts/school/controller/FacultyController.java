@@ -42,7 +42,7 @@ public class FacultyController {
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty, @PathVariable Long id) {
         Faculty foundFaculty = facultyService.editFaculty(id, faculty);
         if (foundFaculty == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();   // Если студент не найден возвращаем ошибку 404
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();   // Если факультет не найден возвращаем ошибку 404
         }
         return ResponseEntity.ok(foundFaculty);
     }
