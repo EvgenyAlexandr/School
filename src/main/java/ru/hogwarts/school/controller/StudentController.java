@@ -1,5 +1,7 @@
 package ru.hogwarts.school.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/student")
+@Tag(name = "StudentService", description = "Студенты")
 public class StudentController {
 
     private final StudentService studentService;
@@ -21,7 +24,7 @@ public class StudentController {
     }
 
     // http://localhost:8080/swagger-ui.html
-
+    @Operation(summary = "Найти Студента по ID")
     @GetMapping("{id}")
     public ResponseEntity<Student> getStudentInfo(@PathVariable long id) {
         Student student = studentService.findStudent(id);
@@ -31,9 +34,11 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
+    @Operation(summary = "Добавить Студента")
     @PostMapping            // Отправить
     public Student createStudent(@RequestBody Student student) {return studentService.addStudent(student);}
 
+    @Operation(summary = "Редактировать Студента по ID")
     @PutMapping("{id}")     // Редактировать
     public ResponseEntity<Student> editStudent(@RequestBody Student student, @PathVariable Long id) {
         Student foundStudent = studentService.editStudent(id, student);
@@ -43,12 +48,14 @@ public class StudentController {
         return ResponseEntity.ok(foundStudent);
     }
 
+    @Operation(summary = "Удалить Студента по ID")
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Поиск Студентов по Возрасту")
     @GetMapping             // Поиск по Возрасту
     public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) int age) {
         if (age > 0) {
@@ -57,6 +64,7 @@ public class StudentController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
+    @Operation(summary = "Поиск Студентов в диапазоне возрастов")
     @GetMapping("/filter")  // Поиск в диапазоне Возрастов
     public ResponseEntity<Collection<Student>> findStudentsByAgeRange(
             @RequestParam int minAge,
@@ -67,6 +75,7 @@ public class StudentController {
         return ResponseEntity.badRequest().build();
     }
 
+    @Operation(summary = "Все Студенты выбранного факультета")
     @GetMapping("{id}/faculty")     // Все студенты выбранного факультета
     public ResponseEntity<Faculty> getStudentFaculty(@PathVariable Long id) {
         Student student = studentService.findStudent(id);

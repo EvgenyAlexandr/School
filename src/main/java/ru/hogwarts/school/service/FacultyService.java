@@ -23,7 +23,7 @@ public class FacultyService {
         return facultyRepository.save(faculty);
     }
 
-    // Найти
+    // Найти факультет по ID
     public Faculty findFaculty(long id) {
         return facultyRepository.getReferenceById(id);
     }
