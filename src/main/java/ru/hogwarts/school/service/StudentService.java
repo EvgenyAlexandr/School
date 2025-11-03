@@ -12,10 +12,8 @@ import java.util.*;
 @Service
 public class StudentService {
 
-    //@Autowired
     private final StudentRepository studentRepository;
 
-    @Autowired
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
