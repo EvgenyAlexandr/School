@@ -34,6 +34,15 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
+    @Operation(summary = "Найти Студента по Имени")
+    @GetMapping("/byName")
+    public ResponseEntity findStudentByName(@RequestParam String name) {
+        if (name != null && !name.isBlank()) {
+            return ResponseEntity.ok(studentService.findByName(name));
+        }
+        return ResponseEntity.badRequest().build();
+    }
+
     @Operation(summary = "Добавить Студента")
     @PostMapping            // Отправить
     public Student createStudent(@RequestBody Student student) {return studentService.addStudent(student);}

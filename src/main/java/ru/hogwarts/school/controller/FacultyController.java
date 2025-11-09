@@ -55,7 +55,7 @@ public class FacultyController {
     }
 
     @Operation(summary = "Поиск Факультета по Цвету")
-    @GetMapping             // Поиск Факультета по цвету
+    @GetMapping("/find")             // Поиск Факультета по цвету
     public ResponseEntity<Collection<Faculty>> findFaculties(@RequestParam(required = false) String color) {
         if (color != null && !color.isBlank()) {
             return ResponseEntity.ok(facultyService.findByColor(color));

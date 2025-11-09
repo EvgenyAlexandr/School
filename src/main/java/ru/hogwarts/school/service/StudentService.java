@@ -23,9 +23,14 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    // Найти
+    // Найти по ID
     public Student findStudent(long id) {
         return studentRepository.findById(id).orElse(null);
+    }
+
+    // Найти по Имени
+    public Student findByName(String name) {
+        return studentRepository.findByNameContainsIgnoreCase(name);
     }
 
     // Редактировать
