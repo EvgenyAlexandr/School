@@ -1,6 +1,5 @@
-.idea/
-*.iml
-
+Thumbs.db
+*.jpg
 
 HELP.md
 target/
