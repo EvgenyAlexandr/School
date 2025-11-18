@@ -17,9 +17,9 @@ import ru.hogwarts.school.model.Student;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)		// Запускаем тестирование на рандомном порту
-@ActiveProfiles("test")															// Профиль test
-@DisplayName("Тест Web приложения")
-class SchoolApplicationTests {
+@ActiveProfiles("test")															// Активация профиля "test" для тестовой конфигурации
+@DisplayName("RestTest Контроллеров Student и Faculty")
+class SchoolApplicationRestTests {
 
 	@LocalServerPort
 	private int port;		// Случайный порт для развертывания тестирования
@@ -44,7 +44,7 @@ class SchoolApplicationTests {
 	@Test
 	@DisplayName("Добавление Студента")
 	void testGetStudentByName() throws Exception {
-		final String name = "Тестовый_Студент";
+		final String name = "Тестовый_Студент1";
 		final int    age  = 13;
 
 		Student student = new Student();

@@ -23,8 +23,9 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @Operation(summary = "Найти Факультет по ID")
-    @GetMapping("{id}")
+    // http://localhost:8080/swagger-ui.html
+    @Operation(summary = "Найти Факультет по Id")
+    @GetMapping("{id}")     // http://localhost:8080/faculty/(*)
     public ResponseEntity<Faculty> getFacultyInfo(@PathVariable long id) {
         Faculty faculty = facultyService.findFaculty(id);
         if (faculty == null) {
@@ -34,22 +35,31 @@ public class FacultyController {
     }
 
     @Operation(summary = "Добавить Факультет")
-    @PostMapping            // Отправить
+    @PostMapping            // Отправить - http://localhost:8080/faculty
     public Faculty createFaculty(@RequestBody Faculty faculty) {return facultyService.addFaculty(faculty);}
 
     @Operation(summary = "Редактировать Факультет по id")
     @PutMapping("{id}")     // Редактировать
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty, @PathVariable Long id) {
+        // Проверка совпадения ID перед вызовом сервиса
+        if (faculty.getId() != id) {
+            return ResponseEntity.badRequest().build(); // 400 - ID не совпадают
+        }
+
         Faculty foundFaculty = facultyService.editFaculty(id, faculty);
         if (foundFaculty == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();   // Если факультет не найден возвращаем ошибку 404
+            return ResponseEntity.badRequest().build(); // 400 - факультет не найден
         }
         return ResponseEntity.ok(foundFaculty);
     }
 
-    @Operation(summary = "Удалить Факультет по id")
+    @Operation(summary = "Удалить Факультет по Id")
     @DeleteMapping("{id}")
     public ResponseEntity<Void> deleteFaculty(@PathVariable Long id) {
+        Faculty faculty = facultyService.findFaculty(id);
+        if (faculty == null) {
+            return ResponseEntity.notFound().build(); // должно вернуть 404
+        }
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
@@ -63,7 +73,7 @@ public class FacultyController {
         return ResponseEntity.ok(Collections.emptyList());
     }
 
-    @Operation(summary = "Поиск факультета по названию ИЛИ цвету")
+    @Operation(summary = "Поиск факультета по Названию ИлИ Цвету")
     @GetMapping("/search")  // Поиск Факультета по Названию ИЛИ цвету
     public ResponseEntity<Collection<Faculty>> searchFaculties(@RequestParam String searchQuery) {
         if (searchQuery != null && !searchQuery.isBlank()) {
@@ -72,8 +82,8 @@ public class FacultyController {
         return ResponseEntity.badRequest().build();
     }
 
-    @Operation(summary = "Поиск всех студентов курса (по id)")
-    @GetMapping("{id}/students")    // Поиск
+    @Operation(summary = "Поиск всех студентов факультета (по id факультета)")
+    @GetMapping("{id}/students")    // Поиск http://localhost:8080/faculty/(*)/students
     public ResponseEntity<Collection<Student>> getFacultyStudents(@PathVariable Long id) {
         Faculty faculty = facultyService.findFaculty(id);
         if (faculty == null) {

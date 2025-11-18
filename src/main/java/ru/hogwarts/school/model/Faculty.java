@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.Collection;
 import java.util.Objects;
+import java.util.Random;
 
 @Entity
 public class Faculty {
@@ -22,10 +23,10 @@ public class Faculty {
 
     public Faculty() {}
 
-    public Faculty(long id, String name, String color) {
-        this.id     = id;
-        this.name   = name;
-        this.color  = color;
+    public Faculty(String name, String color) {
+        this.id       = 0;  // При обращении к базе будет переписано, необходимо объявление, значение не важно.
+        this.name     = name;
+        this.color    = color;
     }
 
     public Collection<Student> getStudents() {

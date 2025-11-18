@@ -24,8 +24,8 @@ public class StudentController {
     }
 
     // http://localhost:8080/swagger-ui.html
-    @Operation(summary = "Найти Студента по ID")
-    @GetMapping("{id}")
+    @Operation(summary = "Найти Студента по Id")
+    @GetMapping("{id}")     // http://localhost:8080/student/(*)
     public ResponseEntity<Student> getStudentInfo(@PathVariable long id) {
         Student student = studentService.findStudent(id);
         if (student == null) {
@@ -35,7 +35,7 @@ public class StudentController {
     }
 
     @Operation(summary = "Найти Студента по Имени")
-    @GetMapping("/byName")
+    @GetMapping("/byName")  // http://localhost:8080/student/byName?name=(*)
     public ResponseEntity findStudentByName(@RequestParam String name) {
         if (name != null && !name.isBlank()) {
             return ResponseEntity.ok(studentService.findByName(name));
@@ -44,11 +44,11 @@ public class StudentController {
     }
 
     @Operation(summary = "Добавить Студента")
-    @PostMapping            // Отправить
+    @PostMapping            // Отправить - http://localhost:8080/student(*)
     public Student createStudent(@RequestBody Student student) {return studentService.addStudent(student);}
 
-    @Operation(summary = "Редактировать Студента по ID")
-    @PutMapping("{id}")     // Редактировать
+    @Operation(summary = "Редактировать Студента по Id")
+    @PutMapping("{id}")     // Редактировать - http://localhost:8080/student/(*)
     public ResponseEntity<Student> editStudent(@RequestBody Student student, @PathVariable Long id) {
         Student foundStudent = studentService.editStudent(id, student);
         if (foundStudent == null) {
@@ -57,15 +57,15 @@ public class StudentController {
         return ResponseEntity.ok(foundStudent);
     }
 
-    @Operation(summary = "Удалить Студента по ID")
-    @DeleteMapping("{id}")
+    @Operation(summary = "Удалить Студента по Id")
+    @DeleteMapping("{id}")  //  http://localhost:8080/student/(*)
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
         return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Поиск Студентов по Возрасту")
-    @GetMapping             // Поиск по Возрасту
+    @GetMapping             // Поиск по Возрасту - http://localhost:8080/student?age=(*)
     public ResponseEntity<Collection<Student>> findStudents(@RequestParam(required = false) int age) {
         if (age > 0) {
             return ResponseEntity.ok(studentService.findByAge(age));
@@ -74,7 +74,7 @@ public class StudentController {
     }
 
     @Operation(summary = "Поиск Студентов в диапазоне возрастов")
-    @GetMapping("/filter")  // Поиск в диапазоне Возрастов
+    @GetMapping("/filter")  // Поиск в диапазоне Возрастов - http://localhost:8080/student/filter?minAge=10&maxAge=12
     public ResponseEntity<Collection<Student>> findStudentsByAgeRange(
             @RequestParam int minAge,
             @RequestParam int maxAge) {
@@ -85,7 +85,7 @@ public class StudentController {
     }
 
     @Operation(summary = "Название Факультета Студента (Студент ID)")
-    @GetMapping("{id}/faculty")     // Все студенты выбранного факультета
+    @GetMapping("{id}/faculty")     // Все студенты выбранного факультета - http://localhost:8080/student/(*)/faculty
     public ResponseEntity<Faculty> getStudentFaculty(@PathVariable Long id) {
         Student student = studentService.findStudent(id);
         if (student == null || student.getFaculty() == null) {
@@ -93,4 +93,6 @@ public class StudentController {
         }
         return ResponseEntity.ok(student.getFaculty());
     }
+
+
 }
