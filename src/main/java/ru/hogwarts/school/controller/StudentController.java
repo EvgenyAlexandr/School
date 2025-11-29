@@ -94,5 +94,21 @@ public class StudentController {
         return ResponseEntity.ok(student.getFaculty());
     }
 
+    @Operation(summary = "Общее количество студентов (Integer)")
+    @GetMapping("/count")           // http://localhost:8080/student/count
+    public Integer getTotalStudentCount() {
+        return studentService.getTotalCountOfStudents();
+    }
 
+    @Operation(summary = "Средний возраст студента (double)")
+    @GetMapping("/average-age")     // http://localhost:8080/student/average-age
+    public double getStudentAverageAge() {
+        return studentService.getAverageAgeOfStudents();
+    }
+
+    @Operation(summary = "Последние 5 записей студентов")
+    @GetMapping("/last-five")       //  http://localhost:8080/student/last-five
+    public Collection<Student> getLastStudents() {
+        return studentService.getLastFiveStudents();
+    }
 }
