@@ -3,6 +3,7 @@ package ru.hogwarts.school.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -64,5 +65,33 @@ public class AvatarController {
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
+    }
+
+    @Operation(summary = "Аватары Всех студентов используя Пагинацию (Постранично)")
+    @GetMapping
+    public ResponseEntity<Page<Avatar>> getAllAvatars(
+            @RequestParam(defaultValue = "0") int page,     // page - Номер страницы (по умолчанию 0), size - Размер страницы (по умолчанию 4)
+            @RequestParam(defaultValue = "8") int size ) {
+
+                // Проверка корректности номера страницы
+                if (page < 0) {
+                    return ResponseEntity.badRequest().build();  // Возвращаем 400 Bad Request при отрицательном значении
+                }
+
+                // Валидация размера страницы: если <=0 или >50, устанавливаем значение по умолчанию (8)
+                if (size <= 0 || size > 50) {
+                    size = 8;
+                }
+
+                // Получение страницы Аватаров из сервиса
+                Page<Avatar> avatars = avatarService.getAllAvatars(page, size);
+
+                // Если данных на странице нет, возвращаем 204 No Content
+                if (avatars.isEmpty()) {
+                    return ResponseEntity.noContent().build();
+                }
+
+                // Если данные есть, возвращаем 200 OK с телом ответа (страница Аватаров)
+                return ResponseEntity.ok(avatars);
     }
 }
