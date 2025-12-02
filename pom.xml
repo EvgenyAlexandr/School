@@ -66,6 +66,11 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<dependency>	<!-- инструмент для управления и выполнения изменений в базах данных -->
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>
+
 
 	</dependencies> <!--  -->
 
