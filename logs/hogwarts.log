@@ -2603,3 +2603,97 @@ java.lang.IllegalStateException: ApplicationContext failure threshold (1) exceed
 	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:231) ~[junit-rt.jar:na]
 	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:55) ~[junit-rt.jar:na]
 
+2025-12-07T07:12:45.934+07:00  INFO 3660 --- [school] [main] r.h.school.FacultyControllerRestTest     : Starting FacultyControllerRestTest using Java 17.0.15 with PID 3660 (started by PC in C:\0 Projekts\Block 3\School)
+2025-12-07T07:12:45.934+07:00  INFO 3660 --- [school] [main] r.h.school.FacultyControllerRestTest     : The following 1 profile is active: "test"
+2025-12-07T07:12:51.001+07:00  INFO 3660 --- [school] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-07T07:12:51.551+07:00  INFO 3660 --- [school] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 444 ms. Found 3 JPA repository interfaces.
+2025-12-07T07:12:55.477+07:00  INFO 3660 --- [school] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 0 (http)
+2025-12-07T07:12:55.541+07:00  INFO 3660 --- [school] [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-12-07T07:12:55.541+07:00  INFO 3660 --- [school] [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.48]
+2025-12-07T07:12:56.079+07:00  INFO 3660 --- [school] [main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-12-07T07:12:56.079+07:00  INFO 3660 --- [school] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 9986 ms
+2025-12-07T07:12:59.344+07:00  INFO 3660 --- [school] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-07T07:12:59.593+07:00  INFO 3660 --- [school] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-07T07:13:00.578+07:00  INFO 3660 --- [school] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-12-07T07:13:00.578+07:00  INFO 3660 --- [school] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-07T07:13:00.834+07:00  WARN 3660 --- [school] [main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-12-07T07:13:03.635+07:00  INFO 3660 --- [school] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-07T07:13:05.842+07:00  INFO 3660 --- [school] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-07T07:13:05.910+07:00 DEBUG 3660 --- [school] [main] r.hogwarts.school.service.AvatarService  : AvatarService инициализирован
+2025-12-07T07:13:06.610+07:00  INFO 3660 --- [school] [main] r.h.school.service.FacultyService        : FacultyService инициализирован
+2025-12-07T07:13:06.643+07:00  INFO 3660 --- [school] [main] r.h.school.service.StudentService        : StudentService инициализирован
+2025-12-07T07:13:07.127+07:00  WARN 3660 --- [school] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-07T07:13:12.393+07:00  INFO 3660 --- [school] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 50723 (http) with context path '/'
+2025-12-07T07:13:12.424+07:00  INFO 3660 --- [school] [main] r.h.school.FacultyControllerRestTest     : Started FacultyControllerRestTest in 28.628 seconds (process running for 34.253)
+2025-12-07T07:13:12.456+07:00  WARN 3660 --- [school] [main] o.s.core.events.SpringDocAppInitializer  : SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2025-12-07T07:13:12.456+07:00  WARN 3660 --- [school] [main] o.s.core.events.SpringDocAppInitializer  : SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2025-12-07T07:13:14.734+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-12-07T07:13:14.734+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-12-07T07:13:14.734+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-12-07T07:13:15.051+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-1] r.h.school.service.FacultyService        : Добавление нового факультета: Черные Паруса
+2025-12-07T07:13:15.051+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-1] r.h.school.service.FacultyService        : Данные факультета: имя='Черные Паруса', цвет='Черный'
+2025-12-07T07:13:15.181+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-1] r.h.school.service.FacultyService        : Факультет успешно добавлен с ID: 1
+2025-12-07T07:13:15.181+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-1] r.h.school.service.FacultyService        : Полные данные сохраненного факультета: Faculty{id=1, name='Черные Паруса', color='Черный'}
+2025-12-07T07:13:15.311+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-3] r.h.school.service.FacultyService        : Поиск факультетов по цвету: 'Черный'
+2025-12-07T07:13:15.417+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-3] r.h.school.service.FacultyService        : Найдено 1 факультетов цвета 'Черный'
+2025-12-07T07:13:15.417+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-3] r.h.school.service.FacultyService        : Найденные факультеты: [Faculty{id=1, name='Черные Паруса', color='Черный'}]
+2025-12-07T07:13:15.701+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-2] r.h.school.service.FacultyService        : Добавление нового факультета: Черные Паруса
+2025-12-07T07:13:15.703+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-2] r.h.school.service.FacultyService        : Данные факультета: имя='Черные Паруса', цвет='Черный'
+2025-12-07T07:13:15.704+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-2] r.h.school.service.FacultyService        : Факультет успешно добавлен с ID: 2
+2025-12-07T07:13:15.704+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-2] r.h.school.service.FacultyService        : Полные данные сохраненного факультета: Faculty{id=2, name='Черные Паруса', color='Черный'}
+2025-12-07T07:13:15.730+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-4] r.h.school.service.StudentService        : Добавление нового студента: Тестовый_Студент_1
+2025-12-07T07:13:15.730+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-4] r.h.school.service.StudentService        : Данные студента: имя='Тестовый_Студент_1', возраст=13, факультет=Черные Паруса
+2025-12-07T07:13:15.730+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-4] r.h.school.service.StudentService        : Студент успешно добавлен с ID: 1
+2025-12-07T07:13:15.730+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-4] r.h.school.service.StudentService        : Полные данные сохраненного студента: student{id=1, name='Тестовый_Студент_1', age=13}
+2025-12-07T07:13:15.730+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-5] r.h.school.service.StudentService        : Добавление нового студента: Тестовый_Студент_2
+2025-12-07T07:13:15.730+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-5] r.h.school.service.StudentService        : Данные студента: имя='Тестовый_Студент_2', возраст=14, факультет=Черные Паруса
+2025-12-07T07:13:15.730+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-5] r.h.school.service.StudentService        : Студент успешно добавлен с ID: 2
+2025-12-07T07:13:15.730+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-5] r.h.school.service.StudentService        : Полные данные сохраненного студента: student{id=2, name='Тестовый_Студент_2', age=14}
+2025-12-07T07:13:15.766+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-6] r.h.school.service.FacultyService        : Поиск факультета по ID: 2
+2025-12-07T07:13:15.829+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-6] r.h.school.service.FacultyService        : Факультет найден: ID=2, имя='Черные Паруса', цвет='Черный'
+2025-12-07T07:13:15.924+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-7] r.h.school.service.FacultyService        : Добавление нового факультета: Черные Паруса
+2025-12-07T07:13:15.924+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-7] r.h.school.service.FacultyService        : Данные факультета: имя='Черные Паруса', цвет='Черный'
+2025-12-07T07:13:15.924+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-7] r.h.school.service.FacultyService        : Факультет успешно добавлен с ID: 3
+2025-12-07T07:13:15.924+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-7] r.h.school.service.FacultyService        : Полные данные сохраненного факультета: Faculty{id=3, name='Черные Паруса', color='Черный'}
+2025-12-07T07:13:15.983+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-8] r.h.school.service.FacultyService        : Добавление нового факультета: Черные Паруса
+2025-12-07T07:13:15.983+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-8] r.h.school.service.FacultyService        : Данные факультета: имя='Черные Паруса', цвет='Черный'
+2025-12-07T07:13:15.983+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-8] r.h.school.service.FacultyService        : Факультет успешно добавлен с ID: 4
+2025-12-07T07:13:15.983+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-8] r.h.school.service.FacultyService        : Полные данные сохраненного факультета: Faculty{id=4, name='Черные Паруса', color='Черный'}
+2025-12-07T07:13:16.020+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-9] r.h.school.service.FacultyService        : Поиск факультетов по имени 'Черные Паруса' или цвету 'Черные Паруса'
+2025-12-07T07:13:16.053+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-9] r.h.school.service.FacultyService        : Найдено 1 факультетов по запросу (имя='Черные Паруса', цвет='Черные Паруса')
+2025-12-07T07:13:16.053+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-9] r.h.school.service.FacultyService        : Результаты поиска:
+2025-12-07T07:13:16.053+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-9] r.h.school.service.FacultyService        :   ID=4, имя='Черные Паруса', цвет='Черный'
+2025-12-07T07:13:16.092+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-10] r.h.school.service.FacultyService        : Поиск факультетов по имени 'Черный' или цвету 'Черный'
+2025-12-07T07:13:16.092+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-10] r.h.school.service.FacultyService        : Найдено 1 факультетов по запросу (имя='Черный', цвет='Черный')
+2025-12-07T07:13:16.092+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-10] r.h.school.service.FacultyService        : Результаты поиска:
+2025-12-07T07:13:16.092+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-10] r.h.school.service.FacultyService        :   ID=4, имя='Черные Паруса', цвет='Черный'
+2025-12-07T07:13:16.124+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-1] r.h.school.service.FacultyService        : Добавление нового факультета: Черные Паруса
+2025-12-07T07:13:16.124+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-1] r.h.school.service.FacultyService        : Данные факультета: имя='Черные Паруса', цвет='Черный'
+2025-12-07T07:13:16.124+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-1] r.h.school.service.FacultyService        : Факультет успешно добавлен с ID: 5
+2025-12-07T07:13:16.124+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-1] r.h.school.service.FacultyService        : Полные данные сохраненного факультета: Faculty{id=5, name='Черные Паруса', color='Черный'}
+2025-12-07T07:13:16.156+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-3] r.h.school.service.FacultyService        : Редактирование факультета с ID: 5
+2025-12-07T07:13:16.156+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-3] r.h.school.service.FacultyService        : Новые данные: имя='Черные Паруса-New', цвет='Черный-New'
+2025-12-07T07:13:16.156+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-3] r.h.school.service.FacultyService        : Старые данные: имя='Черные Паруса', цвет='Черный'
+2025-12-07T07:13:16.315+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-3] r.h.school.service.FacultyService        : Факультет с ID 5 успешно обновлен
+2025-12-07T07:13:16.315+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-3] r.h.school.service.FacultyService        : Обновленные данные факультета: Faculty{id=5, name='Черные Паруса-New', color='Черный-New'}
+2025-12-07T07:13:16.378+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-2] r.h.school.service.FacultyService        : Добавление нового факультета: Черные Паруса
+2025-12-07T07:13:16.378+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-2] r.h.school.service.FacultyService        : Данные факультета: имя='Черные Паруса', цвет='Черный'
+2025-12-07T07:13:16.378+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-2] r.h.school.service.FacultyService        : Факультет успешно добавлен с ID: 6
+2025-12-07T07:13:16.378+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-2] r.h.school.service.FacultyService        : Полные данные сохраненного факультета: Faculty{id=6, name='Черные Паруса', color='Черный'}
+2025-12-07T07:13:16.399+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-4] r.h.school.service.FacultyService        : Поиск факультета по ID: 6
+2025-12-07T07:13:16.399+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-4] r.h.school.service.FacultyService        : Факультет найден: ID=6, имя='Черные Паруса', цвет='Черный'
+2025-12-07T07:13:16.399+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-4] r.h.school.service.FacultyService        : Удаление факультета с ID: 6
+2025-12-07T07:13:18.275+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-4] r.h.school.service.FacultyService        : Факультет с ID 6 успешно удален
+2025-12-07T07:13:18.306+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-5] r.h.school.service.FacultyService        : Поиск факультета по ID: 6
+2025-12-07T07:13:18.306+07:00  WARN 3660 --- [school] [http-nio-auto-1-exec-5] r.h.school.service.FacultyService        : Факультет с ID 6 не найден
+2025-12-07T07:13:18.355+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-6] r.h.school.service.FacultyService        : Добавление нового факультета: Черные Паруса
+2025-12-07T07:13:18.355+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-6] r.h.school.service.FacultyService        : Данные факультета: имя='Черные Паруса', цвет='Черный'
+2025-12-07T07:13:18.388+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-6] r.h.school.service.FacultyService        : Факультет успешно добавлен с ID: 7
+2025-12-07T07:13:18.388+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-6] r.h.school.service.FacultyService        : Полные данные сохраненного факультета: Faculty{id=7, name='Черные Паруса', color='Черный'}
+2025-12-07T07:13:18.403+07:00 DEBUG 3660 --- [school] [http-nio-auto-1-exec-7] r.h.school.service.FacultyService        : Поиск факультета по ID: 7
+2025-12-07T07:13:18.403+07:00  INFO 3660 --- [school] [http-nio-auto-1-exec-7] r.h.school.service.FacultyService        : Факультет найден: ID=7, имя='Черные Паруса', цвет='Черный'
+2025-12-07T07:13:18.504+07:00  INFO 3660 --- [school] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-07T07:13:18.567+07:00  INFO 3660 --- [school] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-12-07T07:13:18.567+07:00  INFO 3660 --- [school] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-07T07:13:18.636+07:00  INFO 3660 --- [school] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-07T07:13:18.667+07:00  INFO 3660 --- [school] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
