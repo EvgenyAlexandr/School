@@ -125,4 +125,18 @@ public class StudentController {
         double averageAge = studentService.getStudentAverageAgeStream();
         return ResponseEntity.ok(averageAge);
     }
+
+    @Operation(summary = "Вычислить сумму чисел от 1 до 1,000,000 (оптимизированная формула)")
+    @GetMapping("/calculate-sum-formula")
+    public ResponseEntity<Long> calculateSumFormula() {
+        long result = studentService.calculateSumOptimized();
+        return ResponseEntity.ok(result);
+    }
+
+    @Operation(summary = "Вычислить сумму чисел от 1 до 1,000,000 (parallel stream)")
+    @GetMapping("/calculate-sum-parallel")
+    public ResponseEntity<Long> calculateSumParallel() {
+        long result = studentService.calculateSumParallelStream();
+        return ResponseEntity.ok(result);
+    }
 }

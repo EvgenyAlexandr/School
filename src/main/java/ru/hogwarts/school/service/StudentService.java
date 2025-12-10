@@ -10,6 +10,7 @@ import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
 @Service
 public class StudentService {
@@ -372,6 +373,55 @@ public class StudentService {
         } catch (Exception e) {
             logger.error("Ошибка при расчете среднего возраста через Stream API: {}", e.getMessage(), e);
             return 0.0;
+        }
+    }
+
+    // Вычислить сумму чисел от 1 до 1,000,000
+    public long calculateSumOptimized() {
+        logger.info("Начало вычисления суммы чисел от 1 до 1,000,000");
+
+        long startTime = System.currentTimeMillis();
+
+        try {
+            // Способ 1: Использование формулы суммы арифметической прогрессии (самый быстрый)
+            // Формула: S = n * (a1 + an) / 2
+            long n = 1_000_000L;
+            long sum = n * (1L + n) / 2;
+
+            long endTime = System.currentTimeMillis();
+            long duration = endTime - startTime;
+
+            logger.info("Сумма чисел от 1 до 1,000,000: {}", sum);
+            logger.info("Время вычисления: {} мс (оптимизированный метод)", duration);
+
+            return sum;
+        } catch (Exception e) {
+            logger.error("Ошибка при вычислении суммы: {}", e.getMessage(), e);
+            return 0L;
+        }
+    }
+
+    // Версия 2: Использование parallel stream (параллельная обработка)
+    public long calculateSumParallelStream() {
+        logger.info("Начало вычисления суммы чисел от 1 до 1,000,000 (parallel stream)");
+
+        long startTime = System.currentTimeMillis();
+
+        try {
+            long sum = LongStream.rangeClosed(1, 1_000_000L)
+                    .parallel()                         // Включаем параллельную обработку
+                    .reduce(0L, Long::sum);
+
+            long endTime = System.currentTimeMillis();
+            long duration = endTime - startTime;
+
+            logger.info("Сумма чисел от 1 до 1,000,000 (parallel): {}", sum);
+            logger.info("Время вычисления (parallel): {} мс", duration);
+
+            return sum;
+        } catch (Exception e) {
+            logger.error("Ошибка при вычислении суммы (parallel): {}", e.getMessage(), e);
+            return 0L;
         }
     }
 }

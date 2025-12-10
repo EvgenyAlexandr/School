@@ -191,4 +191,41 @@ public class FacultyService {
             return Collections.emptyList();
         }
     }
+
+    // Получить самое длинное название факультета
+    public String getLongestFacultyName() {
+        logger.info("Поиск самого длинного названия факультета");
+
+        try {
+            List<Faculty> faculties = facultyRepository.findAll();
+
+            if (faculties.isEmpty()) {
+                logger.warn("Нет факультетов для поиска самого длинного названия");
+                return "";
+            }
+
+            // Используем Stream API для поиска самого длинного названия
+            String longestName = faculties.stream()
+                    .map(Faculty::getName)                          // Получаем названия
+                    .filter(Objects::nonNull)                       // Фильтруем null значения
+                    .max(Comparator.comparingInt(String::length))   // Ищем максимальную длину
+                    .orElse("");                              // Возвращаем пустую строку если не найдено
+
+            logger.info("Самое длинное название факультета: '{}' (длина: {} символов)",
+                    longestName, longestName.length());
+
+            if (logger.isDebugEnabled()) {
+                logger.debug("Все названия факультетов и их длина:");
+                faculties.stream()
+                        .map(Faculty::getName)
+                        .filter(Objects::nonNull)
+                        .forEach(name -> logger.debug("  '{}' - {} символов", name, name.length()));
+            }
+
+            return longestName;
+        } catch (Exception e) {
+            logger.error("Ошибка при поиске самого длинного названия факультета: {}", e.getMessage(), e);
+            return "";
+        }
+    }
 }

@@ -91,4 +91,14 @@ public class FacultyController {
         }
         return ResponseEntity.ok(faculty.getStudents());
     }
+
+    @Operation(summary = "Получить самое длинное название факультета")
+    @GetMapping("/longest-name")  // http://localhost:8080/faculty/longest-name
+    public ResponseEntity<String> getLongestFacultyName() {
+        String longestName = facultyService.getLongestFacultyName();
+        if (longestName == null || longestName.isEmpty()) {
+            return ResponseEntity.ok("Нет факультетов");
+        }
+        return ResponseEntity.ok(longestName);
+    }
 }
