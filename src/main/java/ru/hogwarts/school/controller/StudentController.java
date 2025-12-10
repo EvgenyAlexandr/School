@@ -111,4 +111,18 @@ public class StudentController {
     public Collection<Student> getLastStudents() {
         return studentService.getLastFiveStudents();
     }
+
+    @Operation(summary = "Получить имена студентов, начинающиеся с буквы А")
+    @GetMapping("/names-starting-with-a")  // http://localhost:8080/student/names-starting-with-a
+    public ResponseEntity<List<String>> getStudentNamesStartingWithA() {
+        List<String> names = studentService.getStudentNamesStartingWithA();
+        return ResponseEntity.ok(names);
+    }
+
+    @Operation(summary = "Средний возраст всех студентов через Stream API")
+    @GetMapping("/average-age-stream")     // http://localhost:8080/student/average-age-stream
+    public ResponseEntity<Double> getStudentAverageAgeStream() {
+        double averageAge = studentService.getStudentAverageAgeStream();
+        return ResponseEntity.ok(averageAge);
+    }
 }

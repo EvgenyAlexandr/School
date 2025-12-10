@@ -9,6 +9,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -315,6 +316,62 @@ public class StudentService {
         } catch (Exception e) {
             logger.error("Ошибка при получении последних 5 студентов: {}", e.getMessage(), e);
             return Collections.emptyList();
+        }
+    }
+
+    // Получить имена студентов, начинающиеся с буквы А
+    public List<String> getStudentNamesStartingWithA() {
+        logger.info("Получение имен студентов, начинающихся с буквы 'А'");
+
+        try {
+            List<String> names = studentRepository.findAll().stream()
+                    .map(Student::getName)                                          // Получаем имена
+                    .filter(name -> name != null && !name.trim().isEmpty())   // Фильтруем непустые имена
+                    .filter(name -> name.toUpperCase().startsWith("А"))       // Фильтруем имена, начинающиеся с "А"
+                    .map(String::toUpperCase)                                       // Приводим к верхнему регистру
+                    .sorted()                                                       // Сортируем по алфавиту
+                    .collect(Collectors.toList());
+
+            logger.info("Найдено {} студентов с именами, начинающимися с 'А'", names.size());
+
+            if (logger.isDebugEnabled() && !names.isEmpty()) {
+                logger.debug("Имена студентов, начинающиеся с 'А':");
+                names.forEach(name -> logger.debug("  {}", name));
+            }
+
+            return names;
+        } catch (Exception e) {
+            logger.error("Ошибка при получении имен студентов, начинающихся с 'А': {}", e.getMessage(), e);
+            return Collections.emptyList();
+        }
+    }
+
+    // Средний возраст всех студентов через Stream API
+    public double getStudentAverageAgeStream() {
+        logger.info("Расчет среднего возраста студентов через Stream API");
+
+        try {
+            List<Student> students = studentRepository.findAll();
+
+            if (students.isEmpty()) {
+                logger.warn("Нет студентов для расчета среднего возраста");
+                return 0.0;
+            }
+
+            double averageAge = students.stream()
+                    .mapToInt(Student::getAge)        // Преобразуем в IntStream возрастов
+                    .average()                        // Вычисляем среднее значение
+                    .orElse(0.0);               // Если нет данных, возвращаем 0.0
+
+            logger.info("Средний возраст студентов через Stream API: {}.2f", averageAge);
+            logger.debug("Всего студентов: {}, суммарный возраст: {}",
+                    students.size(),
+                    students.stream().mapToInt(Student::getAge).sum());
+
+            return averageAge;
+        } catch (Exception e) {
+            logger.error("Ошибка при расчете среднего возраста через Stream API: {}", e.getMessage(), e);
+            return 0.0;
         }
     }
 }
