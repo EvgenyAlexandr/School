@@ -18,6 +18,9 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
+    // Объект для синхронизации
+    private final Object lock = new Object();
+
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
         logger.info("StudentService инициализирован");
@@ -422,6 +425,169 @@ public class StudentService {
         } catch (Exception e) {
             logger.error("Ошибка при вычислении суммы (parallel): {}", e.getMessage(), e);
             return 0L;
+        }
+    }
+
+    // Вывода имен студентов в параллельном режиме
+    public void printStudentNamesParallel() {
+        logger.info("Начало вывода имен студентов в параллельном режиме");
+
+        try {
+            // Получаем всех студентов
+            List<Student> allStudents = studentRepository.findAll();
+
+            if (allStudents.isEmpty()) {
+                logger.warn("В базе данных нет студентов для вывода");
+                System.out.println("В базе данных нет студентов");
+                return;
+            }
+
+            // Берем первые 6 студентов (или меньше, если студентов меньше)
+            List<String> studentNames = allStudents.stream()
+                    .limit(6)
+                    .map(Student::getName)
+                    .collect(Collectors.toList());
+
+            logger.info("Будет выведено {} имен студентов", studentNames.size());
+
+            // Вывод первых двух имен в основном потоке
+            if (studentNames.size() > 0) {
+                System.out.println(studentNames.get(0) + " (основной поток)");
+            }
+            if (studentNames.size() > 1) {
+                System.out.println(studentNames.get(1) + " (основной поток)");
+            }
+
+            // Вывод третьего и четвертого имен в параллельном потоке
+            if (studentNames.size() > 2) {
+                Thread thread1 = new Thread(() -> {
+                    if (studentNames.size() > 2) {
+                        System.out.println(studentNames.get(2) + " (параллельный поток 1)");
+                    }
+                    if (studentNames.size() > 3) {
+                        System.out.println(studentNames.get(3) + " (параллельный поток 1)");
+                    }
+                });
+                thread1.start();
+
+                // Даем потоку немного времени на выполнение
+                try {
+                    thread1.join(100);
+                } catch (InterruptedException e) {
+                    logger.error("Ошибка при ожидании потока 1: {}", e.getMessage());
+                    Thread.currentThread().interrupt();
+                }
+            }
+
+            // Вывод пятого и шестого имен в еще одном параллельном потоке
+            if (studentNames.size() > 4) {
+                Thread thread2 = new Thread(() -> {
+                    if (studentNames.size() > 4) {
+                        System.out.println(studentNames.get(4) + " (параллельный поток 2)");
+                    }
+                    if (studentNames.size() > 5) {
+                        System.out.println(studentNames.get(5) + " (параллельный поток 2)");
+                    }
+                });
+                thread2.start();
+
+                // Даем потоку немного времени на выполнение
+                try {
+                    thread2.join(100);
+                } catch (InterruptedException e) {
+                    logger.error("Ошибка при ожидании потока 2: {}", e.getMessage());
+                    Thread.currentThread().interrupt();
+                }
+            }
+
+            logger.info("Завершение вывода имен студентов в параллельном режиме");
+
+        } catch (Exception e) {
+            logger.error("Ошибка при выводе имен студентов в параллельном режиме: {}", e.getMessage(), e);
+        }
+    }
+
+    // Синхронизированный метод для вывода имени студента в консоль
+    private synchronized void printNameSynchronized(String name, String threadName) {
+        System.out.println(name + " (" + threadName + ")");
+    }
+
+    // Вывода имен студентов с синхронизацией
+    public void printStudentNamesSynchronized() {
+        logger.info("Начало вывода имен студентов с синхронизацией");
+
+        try {
+            // Получаем всех студентов
+            List<Student> allStudents = studentRepository.findAll();
+
+            if (allStudents.isEmpty()) {
+                logger.warn("В базе данных нет студентов для вывода");
+                System.out.println("В базе данных нет студентов");
+                return;
+            }
+
+            // Берем первые 6 студентов (или меньше, если студентов меньше)
+            List<String> studentNames = allStudents.stream()
+                    .limit(6)
+                    .map(Student::getName)
+                    .collect(Collectors.toList());
+
+            logger.info("Будет выведено {} имен студентов", studentNames.size());
+
+            // Вывод первых двух имен в основном потоке
+            if (studentNames.size() > 0) {
+                printNameSynchronized(studentNames.get(0), "основной поток");
+            }
+            if (studentNames.size() > 1) {
+                printNameSynchronized(studentNames.get(1), "основной поток");
+            }
+
+            // Вывод третьего и четвертого имен в параллельном потоке
+            if (studentNames.size() > 2) {
+                Thread thread1 = new Thread(() -> {
+                    if (studentNames.size() > 2) {
+                        printNameSynchronized(studentNames.get(2), "параллельный поток 1");
+                    }
+                    if (studentNames.size() > 3) {
+                        printNameSynchronized(studentNames.get(3), "параллельный поток 1");
+                    }
+                });
+                thread1.start();
+
+                // Даем потоку немного времени на выполнение
+                try {
+                    thread1.join(100);
+                } catch (InterruptedException e) {
+                    logger.error("Ошибка при ожидании потока 1: {}", e.getMessage());
+                    Thread.currentThread().interrupt();
+                }
+            }
+
+            // Вывод пятого и шестого имен в еще одном параллельном потоке
+            if (studentNames.size() > 4) {
+                Thread thread2 = new Thread(() -> {
+                    if (studentNames.size() > 4) {
+                        printNameSynchronized(studentNames.get(4), "параллельный поток 2");
+                    }
+                    if (studentNames.size() > 5) {
+                        printNameSynchronized(studentNames.get(5), "параллельный поток 2");
+                    }
+                });
+                thread2.start();
+
+                // Даем потоку немного времени на выполнение
+                try {
+                    thread2.join(100);
+                } catch (InterruptedException e) {
+                    logger.error("Ошибка при ожидании потока 2: {}", e.getMessage());
+                    Thread.currentThread().interrupt();
+                }
+            }
+
+            logger.info("Завершение вывода имен студентов с синхронизацией");
+
+        } catch (Exception e) {
+            logger.error("Ошибка при выводе имен студентов с синхронизацией: {}", e.getMessage(), e);
         }
     }
 }

@@ -139,4 +139,18 @@ public class StudentController {
         long result = studentService.calculateSumParallelStream();
         return ResponseEntity.ok(result);
     }
+
+    @Operation(summary = "Вывести имена студентов в параллельном режиме")
+    @GetMapping("/print-parallel")  // http://localhost:8080/student/print-parallel
+    public ResponseEntity<String> printStudentNamesParallel() {
+        studentService.printStudentNamesParallel();
+        return ResponseEntity.ok("Имена студентов выводятся в консоль в параллельном режиме");
+    }
+
+    @Operation(summary = "Вывести имена студентов с синхронизацией")
+    @GetMapping("/print-synchronized")  // http://localhost:8080/student/print-synchronized
+    public ResponseEntity<String> printStudentNamesSynchronized() {
+        studentService.printStudentNamesSynchronized();
+        return ResponseEntity.ok("Имена студентов выводятся в консоль с синхронизацией");
+    }
 }
