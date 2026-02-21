@@ -1,0 +1,25 @@
+2025-12-14T06:53:37.498+07:00  INFO 6476 --- [school] [main] ru.hogwarts.school.SchoolApplication     : Starting SchoolApplication using Java 17.0.15 with PID 6476 (C:\0 Projekts\Block 3\School\target\classes started by PC in C:\0 Projekts\Block 3\School)
+2025-12-14T06:53:37.515+07:00  INFO 6476 --- [school] [main] ru.hogwarts.school.SchoolApplication     : No active profile set, falling back to 1 default profile: "default"
+2025-12-14T06:53:49.755+07:00  INFO 6476 --- [school] [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-12-14T06:53:51.130+07:00  INFO 6476 --- [school] [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 1201 ms. Found 3 JPA repository interfaces.
+2025-12-14T06:53:58.492+07:00  INFO 6476 --- [school] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-12-14T06:53:59.899+07:00  INFO 6476 --- [school] [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 21648 ms
+2025-12-14T06:54:02.290+07:00  INFO 6476 --- [school] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-12-14T06:54:03.129+07:00  INFO 6476 --- [school] [main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@69aabcb0
+2025-12-14T06:54:03.149+07:00  INFO 6476 --- [school] [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-12-14T06:54:12.713+07:00  INFO 6476 --- [school] [main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-12-14T06:54:15.965+07:00  INFO 6476 --- [school] [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-12-14T06:54:18.863+07:00  INFO 6476 --- [school] [main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-12-14T06:54:18.966+07:00 DEBUG 6476 --- [school] [main] r.hogwarts.school.service.AvatarService  : AvatarService инициализирован
+2025-12-14T06:54:19.458+07:00  INFO 6476 --- [school] [main] r.h.school.service.FacultyService        : FacultyService инициализирован
+2025-12-14T06:54:19.529+07:00  INFO 6476 --- [school] [main] r.h.school.service.StudentService        : StudentService инициализирован
+2025-12-14T06:54:21.028+07:00  WARN 6476 --- [school] [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-12-14T06:54:26.251+07:00  INFO 6476 --- [school] [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-12-14T06:54:26.322+07:00  INFO 6476 --- [school] [main] ru.hogwarts.school.SchoolApplication     : Started SchoolApplication in 52.119 seconds (process running for 54.204)
+2025-12-14T06:54:26.352+07:00  WARN 6476 --- [school] [main] o.s.core.events.SpringDocAppInitializer  : SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2025-12-14T06:54:26.352+07:00  INFO 6476 --- [school] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-12-14T06:54:26.352+07:00  WARN 6476 --- [school] [main] o.s.core.events.SpringDocAppInitializer  : SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2025-12-14T06:54:26.420+07:00  INFO 6476 --- [school] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-12-14T06:54:26.461+07:00  INFO 6476 --- [school] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-12-14T06:54:26.477+07:00  INFO 6476 --- [school] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-12-14T06:54:26.508+07:00  INFO 6476 --- [school] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
