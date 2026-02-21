@@ -17,6 +17,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
+import static org.junit.jupiter.api.Assertions.*;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -34,12 +35,12 @@ public class StudentControllerRestTest {
     private StudentController studentController;        // Тестируемый контроллер
 
 
-    // Для очистки базы перед каждым тестом
     @Autowired
     private StudentRepository studentRepository;
     @Autowired
     private FacultyRepository facultyRepository;
 
+    // Для очистки базы перед каждым тестом
     @BeforeEach
     void setUp() {
         // Очищаем базу данных перед каждым тестом
@@ -51,38 +52,36 @@ public class StudentControllerRestTest {
     @DisplayName("Контроллеры запускаются")
     void contextLoads() throws Exception {
         Assertions.assertThat(studentController).isNotNull();
-        //Assertions.assertThat(facultyController).isNotNull();
+//        Assertions.assertThat(facultyController).isNotNull();
     }
 
     @Test
     @DisplayName("Найти Студента по Id")
     void testGetStudentInfo() throws Exception {
-        Student student = new Student("Тестовый_Студент2", 13);
-
-        // Создаем запись в базе
-        Student sentStudent = this.restTemplate.postForObject(
-                "http://localhost:" + port + "/student", student, Student.class);
+        // Создаем запись в Тестовой Базе H2
+        Student student = studentRepository.save(
+                new Student("Тестовый_Студент2", 13)
+        );
 
         // Проверяем наличие записи
         Student responseStudent = this.restTemplate.getForObject(
-                "http://localhost:" + port + "/student/" + sentStudent.getId(),
+                "http://localhost:" + port + "/student/" + student.getId(),
                 Student.class
         );
 
         Assertions.assertThat(responseStudent).isNotNull();
         Assertions
                 .assertThat(responseStudent.getId())
-                .isEqualTo(sentStudent.getId());
+                .isEqualTo(student.getId());    // Сравниваем Id
     }
 
     @Test
     @DisplayName("Найти Студента по Имени")
     void testFindStudentByName() throws Exception {
-        Student student = new Student("Тестовый_Студент2", 13);
-
-        // Создаем запись в базе
-        this.restTemplate.postForObject(
-                "http://localhost:" + port + "/student", student, Student.class);
+        // Создаем запись в Тестовой Базе H2
+        Student student = studentRepository.save(
+                new Student("Тестовый_Студент2", 13)
+        );
 
         // Проверяем наличие записи
         Student responseStudent = this.restTemplate.getForObject(
@@ -93,7 +92,7 @@ public class StudentControllerRestTest {
         Assertions.assertThat(responseStudent).isNotNull();
         Assertions
                 .assertThat(responseStudent.getName())
-                .isEqualTo(student.getName());
+                .isEqualTo(student.getName());  // Сравниваем Name
     }
 
     @Test
@@ -101,26 +100,32 @@ public class StudentControllerRestTest {
     void testGetStudentByName() throws Exception {
         Student student = new Student("Тестовый_Студент1", 13);
 
+        Student responseStudent = this.restTemplate.postForObject(
+                "http://localhost:" + port + "/student", student, Student.class);
+
+
         Assertions
-                .assertThat(this.restTemplate.postForObject(
-                        "http://localhost:" + port + "/student", student, String.class))
+                .assertThat(responseStudent)
                 .isNotNull();
+
+        // Проверяем в базе, что студент добавился
+        assertTrue(studentRepository.findById(responseStudent.getId()).isPresent());
     }
 
     @Test
     @DisplayName("Редактирование Студента")
     void testEditStudent() throws Exception {
-        Student student = new Student("Тестовый_Студент1", 13);
-
         final String str = "-New";
 
-        Student createdStudent = this.restTemplate.postForObject(
-                "http://localhost:" + port + "/student", student, Student.class);
+        // Создаем запись в Тестовой Базе H2
+        Student createdStudent = studentRepository.save(
+                new Student("Тестовый_Студент2", 13)
+        );
 
         Assertions.assertThat(createdStudent).isNotNull();
 
-        createdStudent.setName(student.getName() + str);
-        createdStudent.setAge(student.getAge() + 5);
+        createdStudent.setName(createdStudent.getName() + str);
+        createdStudent.setAge(createdStudent.getAge() + 5);
 
         Assertions
                 .assertThat(this.restTemplate.exchange(
@@ -132,16 +137,22 @@ public class StudentControllerRestTest {
                 .isNotNull()
                 .extracting(Student::getName, Student::getAge)
                 .containsExactly(createdStudent.getName(), createdStudent.getAge());
+
+        // Проверяем что данные действительно изменились
+        Student updatedStudent = studentRepository.findById(createdStudent.getId()).orElse(null);
+        assertNotNull(updatedStudent);
+        assertEquals(createdStudent.getName(), updatedStudent.getName());
+        assertEquals(createdStudent.getAge(),  updatedStudent.getAge());
+
     }
 
     @Test
     @DisplayName("Удаление Студента по Id")
     void testDeleteStudent() throws Exception {
-        Student student = new Student("Тестовый_Студент1", 13);
-
-        // Добавление студента в базу
-        Student createdStudent = this.restTemplate.postForObject(
-                "http://localhost:" + port + "/student", student, Student.class);
+        // Создаем запись в Тестовой Базе H2
+        Student createdStudent = studentRepository.save(
+                new Student("Тестовый_Студент1", 13)
+        );
 
         Assertions.assertThat(createdStudent).isNotNull();
         Assertions.assertThat(createdStudent.getId()).isNotNull();
@@ -159,14 +170,13 @@ public class StudentControllerRestTest {
     @Test
     @DisplayName("Поиск студента по возрасту")
     void testFindStudentsAge() throws Exception {
-        Student student1 = new Student("Тестовый_Студент_1", 13);
-        Student student2 = new Student("Тестовый_Студент_2", 10);
-
-        // Добавление студента в базу
-        this.restTemplate.postForObject(
-                "http://localhost:" + port + "/student", student1, Student.class);
-        this.restTemplate.postForObject(
-                "http://localhost:" + port + "/student", student2, Student.class);
+        // Создаем запись в Тестовой Базе H2
+        Student student1 = studentRepository.save(
+                new Student("Тестовый_Студент_1", 10)
+        );
+        Student student2 = studentRepository.save(
+                new Student("Тестовый_Студент_2", 13)
+        );
 
         // Получаем ответ
         Student[] students = this.restTemplate.getForObject(
@@ -186,19 +196,19 @@ public class StudentControllerRestTest {
     @Test
     @DisplayName("Поиск студентов в диапазоне возрастов")
     void testFindStudentsByAgeRange() throws Exception {
-        Student student1 = new Student("Тестовый_Студент_1", 21);
-        Student student2 = new Student("Тестовый_Студент_2", 22);
-        Student student3 = new Student("Тестовый_Студент_3", 23);
         int minAge = 21;
         int maxAge = 22;
 
-        // Добавление студента в базу
-        this.restTemplate.postForObject(
-                "http://localhost:" + port + "/student", student1, Student.class);
-        this.restTemplate.postForObject(
-                "http://localhost:" + port + "/student", student2, Student.class);
-        this.restTemplate.postForObject(
-                "http://localhost:" + port + "/student", student3, Student.class);
+        // Создаем запись в Тестовой Базе H2
+        Student student1 = studentRepository.save(
+                new Student("Тестовый_Студент_1", 21)
+        );
+        Student student2 = studentRepository.save(
+                new Student("Тестовый_Студент_2", 22)
+        );
+        Student student3 = studentRepository.save(
+                new Student("Тестовый_Студент_3", 23)
+        );
 
         // Получаем ответ
         Student[] students = this.restTemplate.getForObject(
@@ -221,9 +231,8 @@ public class StudentControllerRestTest {
         Student student = new Student("Тестовый_Студент_1", 13);
         Faculty faculty = new Faculty("Черные Паруса", "Черный");
 
-        // Добавление факультета
-        Faculty createdFaculty = this.restTemplate.postForObject(
-                "http://localhost:" + port + "/faculty", faculty, Faculty.class);
+        // Создаем запись в Тестовой Базе H2
+        Faculty createdFaculty = facultyRepository.save(faculty);
 
         Assertions.assertThat(createdFaculty).isNotNull();
 

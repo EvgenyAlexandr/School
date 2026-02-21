@@ -6,8 +6,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import ru.hogwarts.school.controller.FacultyController;
@@ -44,17 +44,17 @@ public class FacultyControllerWebMvcTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
+    @MockitoBean
     private FacultyService facultyService;
 
-    @MockBean
+    @MockitoBean
     private StudentService studentService;
 
     private Faculty faculty;
     private Student student1;
     private Student student2;
 
-    @BeforeEach
+    @BeforeEach             // Выполняется перед каждым тестом
     void setUp() {
         faculty = new Faculty("Черные Паруса", "Черный");
         faculty.setId(1L);

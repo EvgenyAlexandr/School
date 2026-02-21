@@ -17,6 +17,9 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @DisplayName("RestTest Контролера Faculty")
@@ -36,6 +39,7 @@ public class FacultyControllerRestTest {
     @Autowired
     private StudentRepository studentRepository;
 
+    // Для очистки базы перед каждым тестом
     @BeforeEach
     void setUp() {
         // Очищаем базу данных перед каждым тестом
@@ -52,11 +56,11 @@ public class FacultyControllerRestTest {
     @Test
     @DisplayName("Найти факультет по Id")
     void testGetFacultyInfo() throws Exception {
-        Faculty faculty = new Faculty("Черные Паруса", "Черный");
+        // Создаем запись в Тестовой Базе H2
+        Faculty sentFaculty = facultyRepository.save(
+                new Faculty("Черные Паруса", "Черный")
+        );
 
-        // Создаем запись в базе
-        Faculty sentFaculty = this.restTemplate.postForObject(
-                "http://localhost:" + port + "/faculty", faculty, Faculty.class);
 
         // Проверяем наличие записи
         Faculty responseFaculty = this.restTemplate.getForObject(
@@ -67,7 +71,7 @@ public class FacultyControllerRestTest {
         Assertions.assertThat(responseFaculty).isNotNull();
         Assertions
                 .assertThat(responseFaculty.getId())
-                .isEqualTo(sentFaculty.getId());
+                .isEqualTo(sentFaculty.getId());        // Сравниваем Id
     }
 
     @Test
@@ -78,8 +82,12 @@ public class FacultyControllerRestTest {
         Faculty createdFaculty = this.restTemplate.postForObject(
                 "http://localhost:" + port + "/faculty", faculty, Faculty.class);
 
-        Assertions.assertThat(createdFaculty).isNotNull();
-        Assertions.assertThat(createdFaculty.getId()).isNotNull();
+        Assertions
+                .assertThat(createdFaculty)
+                .isNotNull();
+
+        // Проверяем в базе, что факультет добавился
+        assertTrue(facultyRepository.findById(createdFaculty.getId()).isPresent());
     }
 
     @Test
@@ -87,15 +95,15 @@ public class FacultyControllerRestTest {
     void testEditFaculty() throws Exception {
         final String str = "-New";
 
-        Faculty faculty = new Faculty("Черные Паруса", "Черный");
-
-        Faculty createdFaculty = this.restTemplate.postForObject(
-                "http://localhost:" + port + "/faculty", faculty, Faculty.class);
+        // Создаем запись в Тестовой Базе H2
+        Faculty createdFaculty = facultyRepository.save(
+                new Faculty("Черные Паруса", "Черный")
+        );
 
         Assertions.assertThat(createdFaculty).isNotNull();
 
-        createdFaculty.setName(faculty.getName() + str);
-        createdFaculty.setColor(faculty.getColor() + str);
+        createdFaculty.setName(createdFaculty.getName() + str);
+        createdFaculty.setColor(createdFaculty.getColor() + str);
 
         Assertions
                 .assertThat(this.restTemplate.exchange(
@@ -106,20 +114,27 @@ public class FacultyControllerRestTest {
                 ).getBody())
                 .isNotNull()
                 .extracting(Faculty::getName, Faculty::getColor)
-                .containsExactly(faculty.getName() + str, faculty.getColor() + str);
+                .containsExactly(createdFaculty.getName(), createdFaculty.getColor());
+
+        // Проверяем что данные действительно изменились
+        Faculty updatedFaculty = facultyRepository.findById(createdFaculty.getId()).orElse(null);
+        assertNotNull(updatedFaculty);
+        assertEquals(createdFaculty.getName(),  updatedFaculty.getName());
+        assertEquals(createdFaculty.getColor(), updatedFaculty.getColor());
     }
 
     @Test
     @DisplayName("Удаление Факультета по Id")
     void testDeleteFaculty() throws Exception {
-        Faculty faculty = new Faculty("Черные Паруса", "Черный");
-
-        Faculty createdFaculty = this.restTemplate.postForObject(
-                "http://localhost:" + port + "/faculty", faculty, Faculty.class);
+        // Создаем запись в Тестовой Базе H2
+        Faculty createdFaculty = facultyRepository.save(
+                new Faculty("Черные Паруса", "Черный")
+        );
 
         Assertions.assertThat(createdFaculty).isNotNull();
         Assertions.assertThat(createdFaculty.getId()).isNotNull();
 
+        // Удаление факультета из базы
         this.restTemplate.delete("http://localhost:" + port + "/faculty/" + createdFaculty.getId());
 
         // Проверяем, что факультет действительно удален
@@ -133,9 +148,10 @@ public class FacultyControllerRestTest {
     @Test
     @DisplayName("Поиск факультета по цвету")
     void testGetFacultyByColor() throws Exception {
-        Faculty faculty = new Faculty("Черные Паруса", "Черный");
-
-        this.restTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, Faculty.class);
+        // Создаем запись в Тестовой Базе H2
+        Faculty faculty = facultyRepository.save(
+                new Faculty("Черные Паруса", "Черный")
+        );
 
         // Ищем факультет по цвету - ожидаем массив
         Faculty[] faculties = this.restTemplate.getForObject(
@@ -154,9 +170,10 @@ public class FacultyControllerRestTest {
     @Test
     @DisplayName("Поиск факультета по Названию ИлИ Цвету")
     void testGetSearchFaculties() throws Exception {
-        Faculty faculty = new Faculty("Черные Паруса", "Черный");
-
-        this.restTemplate.postForObject("http://localhost:" + port + "/faculty", faculty, Faculty.class);
+        // Создаем запись в Тестовой Базе H2
+        Faculty faculty = facultyRepository.save(
+                new Faculty("Черные Паруса", "Черный")
+        );
 
         // Ищем факультет по Названию - ожидаем массив
         Faculty[] facultiesByName = this.restTemplate.getForObject(
@@ -188,10 +205,11 @@ public class FacultyControllerRestTest {
     @Test
     @DisplayName("Поиск всех студентов факультета")
     void testGetFacultyStudents() throws Exception {
-        // Создаем факультет
-        Faculty faculty = new Faculty("Черные Паруса", "Черный");
-        Faculty createdFaculty = this.restTemplate.postForObject(
-                "http://localhost:" + port + "/faculty", faculty, Faculty.class);
+        // Создаем запись в Тестовой Базе H2
+        Faculty createdFaculty = facultyRepository.save(
+                new Faculty("Черные Паруса", "Черный")
+        );
+
         Assertions.assertThat(createdFaculty).isNotNull();
 
         // Создаем студентов и привязываем их к факультету
@@ -201,9 +219,10 @@ public class FacultyControllerRestTest {
         Student student2 = new Student("Тестовый_Студент_2", 14);
         student2.setFaculty(createdFaculty);
 
-        // Добавляем студентов
-        this.restTemplate.postForObject("http://localhost:" + port + "/student", student1, Student.class);
-        this.restTemplate.postForObject("http://localhost:" + port + "/student", student2, Student.class);
+        // Создаем запись в Тестовой Базе H2
+        studentRepository.save(student1);
+        studentRepository.save(student2);
+
 
         // Получаем студентов факультета - ожидаем массив студентов
         Student[] students = this.restTemplate.getForObject(
@@ -218,6 +237,6 @@ public class FacultyControllerRestTest {
                 .isNotEmpty()
                 .hasSize(2)
                 .extracting(Student::getName)
-                .contains("Тестовый_Студент_1", "Тестовый_Студент_2");
+                .contains(student1.getName(), student2.getName());
     }
 }
